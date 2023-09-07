@@ -41,4 +41,19 @@ const updateUser = asyncHandler(async (req, res) => {
     throw new Error(err);
   }
 });
-export { getSingleUser, getAllUsers, updateUser, deleteUser };
+
+const deactivate = asyncHandler(async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, { active: false });
+
+    res.status(200).json({
+      success: true,
+      data: null
+    });
+  } catch(err) {
+    throw new Error(err);
+  }
+
+});
+
+export { getSingleUser, getAllUsers, updateUser, deleteUser, deactivate };
